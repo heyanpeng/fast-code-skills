@@ -10,6 +10,7 @@
 | [fast-small-review](skills/fast-small-review/SKILL.md) | 审查小改动，只报告可行动问题 | 快速审查刚才的改动，不修改代码 |
 | [fast-review-fix](skills/fast-review-fix/SKILL.md) | 核实并修复具体 review findings | 修复刚才审查的 P2 问题，只做必要改动 |
 | [fast-commit](skills/fast-commit/SKILL.md) | 选择性暂存并提交当前任务改动 | 提交这次任务，不带上无关文件 |
+| [upgrade-deepdoc](skills/upgrade-deepdoc/SKILL.md) | 按指定版本升级 DeepDoc SDK 和引擎 | `$upgrade-deepdoc 1.3.5` |
 
 每个技能可以独立使用，也可以在同一对话中依次使用，复用目标、改动范围和验证结果。高风险任务会升级到适当的完整流程。
 
