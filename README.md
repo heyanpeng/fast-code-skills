@@ -6,7 +6,7 @@
 
 | 技能 | 用途 | 调用示例 |
 | --- | --- | --- |
-| [fast-small-task](skills/fast-small-task/SKILL.md) | 完成低风险小需求 | 隐藏这个页面的分享按钮，只跑相关检查 |
+| [fast-small-task](skills/fast-small-task/SKILL.md) | 完成低风险小需求，完成后默认调用快速审查 | 隐藏这个页面的分享按钮，只跑相关检查 |
 | [fast-small-review](skills/fast-small-review/SKILL.md) | 审查小改动，只报告可行动问题 | 快速审查刚才的改动，不修改代码 |
 | [fast-review-fix](skills/fast-review-fix/SKILL.md) | 核实并修复具体 review findings | 修复刚才审查的 P2 问题，只做必要改动 |
 | [fast-commit](skills/fast-commit/SKILL.md) | 选择性暂存并提交当前任务改动 | 提交这次任务，不带上无关文件 |

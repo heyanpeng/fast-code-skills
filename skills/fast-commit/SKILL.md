@@ -93,7 +93,7 @@ git commit -m "<符合用户或项目约定的提交信息>"
 
 ## 安全边界
 
-- 在 `main`、`master`、`release` 或项目明确的保护分支上，默认停止并要求用户确认；
+- 仅在当前分支为 `master` 时，默认停止并要求用户确认；在其他分支（包括 `main`、`release` 或项目明确的保护分支）按用户已明确的提交要求直接提交，不额外确认；
 - 不执行 `git commit --amend`；
 - 不 push、不创建 PR、不关闭外部 review；
 - 不使用 `--no-verify` 绕过 hook；

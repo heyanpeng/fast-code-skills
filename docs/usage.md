@@ -81,7 +81,7 @@ Claude Code 已有 `.claude/skills -> ../skills`，并通过 `CLAUDE.md` 读取�
 
 原生入口启用后，Codex 的显式调用通常为 `$fast-small-task` 或 `$upgrade-deepdoc 1.3.5`，Claude Code 为 `/fast-small-task`。如果工具未发现技能，检查安装路径与 `SKILL.md`，并重开会话；也可明确要求读取对应文件后按其流程执行。
 
-同一对话中，后续技能复用目标、修改文件和验证结果。只有 diff 变化、验证覆盖失效或风险升级时才补充检查。独立使用审查技能时，可以指定 staged、unstaged、文件、commit 或审查基准。
+同一对话中，`fast-small-task` 在完成实现和精准验证后默认调用 `fast-small-review`；后续技能复用目标、修改文件和验证结果。只有 diff 变化、验证覆盖失效或风险升级时才补充检查。用户可以明确要求跳过默认 review。独立使用审查技能时，可以指定 staged、unstaged、文件、commit 或审查基准。
 
 `fast-commit` 遵循用户和项目的提交格式；默认排除无关改动，在保护分支、归属不明或验证失败等情况下停止并说明。它不会自动推送。
 
