@@ -100,6 +100,19 @@ Claude Code 已有 `.claude/skills -> ../skills`，并通过 `CLAUDE.md` 读取�
 
 `fast-commit` 遵循用户和项目的提交格式；默认排除无关改动，在保护分支、归属不明或验证失败等情况下停止并说明。它不会自动推送。
 
+`fast-l3-ai-native` 在用户授权 push 后等待 GitLab CI 时，使用技能目录中的 `scripts/wait-gitlab-pipeline.mjs`。提前设置只读 API Token 和项目配置：
+
+```bash
+export GITLAB_BASE_URL=https://wisgit.qihoo.net
+export GITLAB_PROJECT_PATH=sofe/pptultra_com_fe
+export GITLAB_TOKEN='在环境中提供，不要写入仓库或日志'
+node skills/fast-l3-ai-native/scripts/wait-gitlab-pipeline.mjs \
+  --sha "$COMMIT_SHA" \
+  --ref "$BRANCH_NAME"
+```
+
+脚本按 commit SHA 和分支精确匹配流水线，轮询至 `success`、`failed`、`blocked` 或超时，并输出一行 JSON；缺少 Token、找不到流水线、API/网络错误或超时都不能报告为 CI 通过。
+
 ## 更新与卸载
 
 CLI 安装的技能可使用：

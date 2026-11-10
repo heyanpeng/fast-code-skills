@@ -97,6 +97,33 @@ Electron 改动要保持主进程、preload、renderer 边界；跨进程能力�
 
 在用户授权的交付范围包含 CI、PR、push 或上线时，本地验证完成后将本任务的提交推送到当前任务分支对应的远端，以触发远端 CI 并继续交付流程。若本任务改动尚未提交，按项目约定创建仅包含本任务改动的提交后再推送。推送前确认远端和目标分支；没有配置上游分支、远端目标不明确、分支受保护或推送失败时，停止并报告具体原因，不得改推其他分支或强制推送。只授权本地实现或 PR 时，不擅自执行后续发布动作。
 
+### GitLab push 后流水线追踪
+
+当目标远端是 GitLab，且用户已授权 push 后等待 CI，使用本技能目录下的 `scripts/wait-gitlab-pipeline.mjs`：
+
+1. Push 前记录准确的 commit SHA、分支或 tag，以及 GitLab 项目路径。项目路径优先取远端 URL 或用户提供的配置，例如 `sofe/pptultra_com_fe`；不要只根据“最新流水线”判断本次结果。
+2. 在环境中提供只读 API Token：`GITLAB_TOKEN`。同时设置 `GITLAB_BASE_URL`（例如 `https://wisgit.qihoo.net`）和 `GITLAB_PROJECT_PATH`；Token 不写入命令、spec、plan、日志或报告。
+3. Push 成功后运行：
+
+   ```bash
+   node skills/fast-l3-ai-native/scripts/wait-gitlab-pipeline.mjs \
+     --sha "$COMMIT_SHA" \
+     --ref "$BRANCH_NAME"
+   ```
+
+   脚本通过 GitLab REST API 精确匹配 `sha` 和 `ref`，找到流水线后轮询其状态；默认每 10 秒检查一次，最长等待 30 分钟。可用 `--poll-seconds`、`--timeout-seconds` 和 `--request-timeout-seconds` 调整。
+4. 脚本输出一行 JSON，`status` 只能按以下规则解释：
+
+   - `success`：流水线通过，可进入人工验收、合并或发布；
+   - `failed`：流水线失败，读取并报告 `failed_jobs`，状态归类为 `introduced_failure` 或 `baseline_blocked`；
+   - `blocked`：流水线等待人工操作或被阻塞，不能声称 CI 通过；
+   - `not_evaluated`：没有匹配流水线、请求失败或超时，必须报告具体原因，不能声称 CI 通过。
+
+   脚本退出码为 `0`（success）、`1`（failed/blocked）或 `2`（not_evaluated/配置错误）。
+5. 最终报告必须包含 push 结果、commit SHA、分支、Pipeline URL、Pipeline 状态、失败 Job（如有）、轮询等待时间和未验证原因。只有脚本返回 `success` 才能写“CI 通过”；其他状态分别写“CI 失败”“CI 阻塞”或“CI 未验证”。
+
+默认不轮询未授权或无法访问的 GitLab 实例；缺少 Token、项目路径、匹配流水线或网络权限时，将状态标记为 `blocked` 或 `not_evaluated`，并停止后续依赖 CI 的合并/发布动作。
+
 区分失败归因：
 
 - `introduced_failure`：由本次改动引入或改变，必须修复并重跑。
@@ -107,7 +134,7 @@ Electron 改动要保持主进程、preload、renderer 边界；跨进程能力�
 本地绿灯后继续推进交付闭环，不停在“代码写完”：
 
 1. **准备 PR**：检查目标分支、分支命名、提交信息、变更范围、影响映射、测试证据、人工验收清单、风险和回滚方案。涉及 UI、跨平台、IPC、权限、sidecar 或发布配置时，补充对应证据。
-2. **运行 CI 门禁**：读取仓库现有 `.gitlab-ci.yml`、GitHub Actions 或等价流水线配置，确认实际运行类型检查、受影响测试、构建、E2E、治理校验和必要的安全检查，并先执行本地等价门禁。E2E Job 必须上传失败截图、trace、视频或 HTML 报告等可审计产物；以目标分支最新代码的临时合并结果和隔离环境 CI 为准，本机结果不能替代 CI。
+2. **运行 CI 门禁**：读取仓库现有 `.gitlab-ci.yml`、GitHub Actions 或等价流水线配置，确认实际运行类型检查、受影响测试、构建、E2E、治理校验和必要的安全检查，并先执行本地等价门禁。对于已授权的 GitLab push，使用 `scripts/wait-gitlab-pipeline.mjs` 获取本次 commit 对应 Pipeline 的最终状态和失败 Job；E2E Job 必须上传失败截图、trace、视频或 HTML 报告等可审计产物；以目标分支最新代码的临时合并结果和隔离环境 CI 为准，本机结果不能替代 CI。
 3. **处理红灯**：读取 CI/Review 日志，按 `introduced_failure` 或 `baseline_blocked` 定位根因。前者必须补测试或修实现后重新运行门禁；后者不修无关历史问题，但在发布门禁要求全绿时停止发布。不能通过删除测试、放宽断言、跳过 Job、`--no-verify` 或改写期望消除红灯；同一问题连续三轮无进展时停止并记录阻塞原因。
 4. **人工验收**：按 `spec.md` 逐条核对正常、边界、失败恢复、权限、UI 和平台行为。macOS、Windows、Linux 分别记录 `passed`、`not_run`、`not_evaluated` 或 `blocked`，不能用单个平台结果代替全部平台。
 5. **合并与发布**：CI 通过、Review 满足要求且人工验收达到发布条件后，按用户请求的目标范围执行合并、打包、部署或发布。优先使用仓库已有流水线和发布入口，不直接改生产数据或绕过审批；缺少必要权限时记录阻塞并停止。
@@ -124,7 +151,7 @@ Electron 改动要保持主进程、preload、renderer 边界；跨进程能力�
 - `部分完成`：已完成实现或 PR，但仍有测试、平台或外部依赖未验证；
 - `阻塞`：缺少权限、环境、业务决策或外部服务，无法安全继续。
 
-报告包含：变更摘要、spec 验收逐条结果、单元/集成/E2E 的 Red/Green 证据（含 E2E 命令、退出码、覆盖场景及报告产物）、CI/Review 结果、平台状态、发布版本与 SHA、上线检查、风险和回滚方式。未运行的命令必须说明原因。
+报告包含：变更摘要、spec 验收逐条结果、单元/集成/E2E 的 Red/Green 证据（含 E2E 命令、退出码、覆盖场景及报告产物）、CI/Review 结果（含 Push、commit SHA、Pipeline URL、最终状态、失败 Job、轮询等待时间和未验证原因）、平台状态、发布版本与 SHA、上线检查、风险和回滚方式。未运行的命令必须说明原因。
 
 ## 停止条件
 
