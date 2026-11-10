@@ -1,14 +1,15 @@
 # 仓库维护约定
 
-本仓库分发五个技能，正式源文件位于 `skills/<name>/SKILL.md`。修改源文件，工具入口链接复用源文件；不直接修改个人安装目录或复制出的安装结果。
+本仓库分发六个技能，正式源文件位于 `skills/<name>/SKILL.md`。修改源文件，工具入口链接复用源文件；不直接修改个人安装目录或复制出的安装结果。
 
 用户点名 fast 技能，或任务符合其适用范围时，先读取对应文件再按其流程执行：
 
 | 技能 | 文件 | 适用范围 |
 | --- | --- | --- |
-| fast-small-task | `skills/fast-small-task/SKILL.md` | 低风险小需求开发 |
-| fast-small-review | `skills/fast-small-review/SKILL.md` | 小改动审查，只报告问题 |
-| fast-review-fix | `skills/fast-review-fix/SKILL.md` | 核实和修复具体 findings |
+| fast-task | `skills/fast-task/SKILL.md` | 低风险小需求开发 |
+| fast-feature-replica | `skills/fast-feature-replica/SKILL.md` | 按本地参考项目复刻 UI 和交互 |
+| fast-review | `skills/fast-review/SKILL.md` | 小改动审查，只报告问题 |
+| fast-fix | `skills/fast-fix/SKILL.md` | 处理日常问题和 review findings |
 | fast-commit | `skills/fast-commit/SKILL.md` | 用户要求提交当前任务 |
 | upgrade-deepdoc | `skills/upgrade-deepdoc/SKILL.md` | 按指定版本升级 DeepDoc SDK 和引擎 |
 

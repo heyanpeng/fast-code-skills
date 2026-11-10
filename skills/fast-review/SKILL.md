@@ -1,9 +1,9 @@
 ---
-name: fast-small-review
+name: fast-review
 description: 快速审查已有项目中的小需求改动，只报告可行动问题并运行精准验证；适用于单页面、单组件、简单交互、样式、文案、配置和低风险 Bug 修复，不适用于大型功能、架构重构或高风险变更的完整审查。
 ---
 
-# Fast Small Review
+# Fast Review
 
 ## 目标
 
@@ -119,7 +119,7 @@ Findings：
 
 ## 任务上下文复用
 
-审查结果中输出并保留：目标、审查文件/基准点、相关但未修改文件、已运行验证、已知失败和 findings。后续 `fast-review-fix` 或 `fast-commit` 应直接消费这些信息，不重新扫描同一范围。
+审查结果中输出并保留：目标、审查文件/基准点、相关但未修改文件、已运行验证、已知失败和 findings。后续 `fast-fix` 或 `fast-commit` 应直接消费这些信息，不重新扫描同一范围。
 
 ## 典型触发示例
 

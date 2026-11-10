@@ -6,9 +6,10 @@
 
 | 技能 | 用途 | 调用示例 |
 | --- | --- | --- |
-| [fast-small-task](skills/fast-small-task/SKILL.md) | 完成低风险小需求，完成后默认调用快速审查 | 隐藏这个页面的分享按钮，只跑相关检查 |
-| [fast-small-review](skills/fast-small-review/SKILL.md) | 审查小改动，只报告可行动问题 | 快速审查刚才的改动，不修改代码 |
-| [fast-review-fix](skills/fast-review-fix/SKILL.md) | 核实并修复具体 review findings | 修复刚才审查的 P2 问题，只做必要改动 |
+| [fast-task](skills/fast-task/SKILL.md) | 完成低风险小需求，完成后默认调用快速审查 | 隐藏这个页面的分享按钮，只跑相关检查 |
+| [fast-feature-replica](skills/fast-feature-replica/SKILL.md) | 根据本地参考项目复刻 UI 和交互状态 | 参考 `/path/to/reference-app`，复刻设置页弹窗及 hover、点击交互 |
+| [fast-review](skills/fast-review/SKILL.md) | 审查小改动，只报告可行动问题 | 快速审查刚才的改动，不修改代码 |
+| [fast-fix](skills/fast-fix/SKILL.md) | 处理日常问题和 review findings | 修复刚才审查的 P2 问题，只做必要改动 |
 | [fast-commit](skills/fast-commit/SKILL.md) | 选择性暂存并提交当前任务改动 | 提交这次任务，不带上无关文件 |
 | [upgrade-deepdoc](skills/upgrade-deepdoc/SKILL.md) | 按指定版本升级 DeepDoc SDK 和引擎 | `$upgrade-deepdoc 1.3.5` |
 
@@ -39,10 +40,11 @@ CLI 需要 Node.js/npm 和网络。这些在线安装命令尚未在本仓库实
 建议先用自然语言点名技能，例如：
 
 ```text
-使用 fast-small-task，完成这个小需求，并只运行直接相关的检查。
+使用 fast-task，完成这个小需求，并只运行直接相关的检查。
+使用 fast-feature-replica，参考项目在 /path/to/reference-app，复刻设置页里的通知弹窗和交互。
 ```
 
-当前仓库已配置原生技能入口，Codex 可使用 `$fast-small-task`，Claude Code 可使用 `/fast-small-task`；实际发现及调用方式以所用工具版本为准。
+当前仓库已配置原生技能入口，Codex 可使用 `$fast-task`，Claude Code 可使用 `/fast-task`；实际发现及调用方式以所用工具版本为准。
 
 ## 兼容与行为
 
