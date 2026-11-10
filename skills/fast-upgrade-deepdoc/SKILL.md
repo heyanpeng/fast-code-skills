@@ -1,11 +1,11 @@
 ---
-name: upgrade-deepdoc
+name: fast-upgrade-deepdoc
 description: 按用户指定版本升级 pptultra_com_fe 工作区的 DeepDoc 转换 SDK，同步桌面端直接依赖的平台引擎、两个转换包、锁文件和文档，完成依赖安装与针对性验证。适用于 DeepDoc SDK 和引擎版本升级，不用于其他依赖升级或转换功能开发。
 ---
 
 # Upgrade DeepDoc
 
-用户只需提供一个明确版本，例如 `$upgrade-deepdoc 1.3.5`。将其视为本次 SDK 的目标版本，不自行选择 latest。版本缺失时询问版本；已有版本则直接执行升级、安装和验证。
+用户只需提供一个明确版本，例如 `$fast-upgrade-deepdoc 1.3.5`。将其视为本次 SDK 的目标版本，不自行选择 latest。版本缺失时询问版本；已有版本则直接执行升级、安装和验证。
 
 ## 定位与版本确认
 

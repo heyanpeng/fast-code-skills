@@ -11,7 +11,7 @@ fast-code-skills/
 │   ├── fast-fix/SKILL.md
 │   ├── fast-commit/SKILL.md
 │   ├── fast-l3-ai-native/SKILL.md
-│   └── upgrade-deepdoc/SKILL.md
+│   └── fast-upgrade-deepdoc/SKILL.md
 ├── .agents/skills -> ../skills
 ├── .claude/skills -> ../skills
 ├── AGENTS.md
@@ -80,10 +80,10 @@ Claude Code 已有 `.claude/skills -> ../skills`，并通过 `CLAUDE.md` 读取�
 使用 fast-fix，逐条核实并修复上述 findings，或处理已定位的日常问题。
 使用 fast-commit，只提交本次任务相关的文件。
 使用 fast-l3-ai-native，按 L3 方法把这个需求从探索推进到上线。
-使用 upgrade-deepdoc，按指定版本升级 DeepDoc SDK 和引擎。
+使用 fast-upgrade-deepdoc，按指定版本升级 DeepDoc SDK 和引擎。
 ```
 
-原生入口启用后，Codex 的显式调用通常为 `$fast-task`、`$fast-feature-replica` 或 `$upgrade-deepdoc 1.3.5`，Claude Code 为 `/fast-task`。如果工具未发现技能，检查安装路径与 `SKILL.md`，并重开会话；也可明确要求读取对应文件后按其流程执行。
+原生入口启用后，Codex 的显式调用通常为 `$fast-task`、`$fast-feature-replica` 或 `$fast-upgrade-deepdoc 1.3.5`，Claude Code 为 `/fast-task`。如果工具未发现技能，检查安装路径与 `SKILL.md`，并重开会话；也可明确要求读取对应文件后按其流程执行。
 
 `fast-feature-replica` 需要参考项目本地路径和明确的页面或功能描述；目标项目默认为当前工作区。它复刻可观察的视觉和交互状态，包括 hover、focus、按下、点击后的持久样式、弹窗/菜单以及关闭方式，数据仅使用目标项目现有能力或 UI mock，不实现后端逻辑。
 
@@ -126,7 +126,7 @@ python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-review
 python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-fix
 python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-commit
 python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-l3-ai-native
-python3 /path/to/skill-creator/scripts/quick_validate.py skills/upgrade-deepdoc
+python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-upgrade-deepdoc
 ```
 
 校验器依赖 PyYAML；它验证结构，不证明技能的实际执行行为。另需检查文档相对链接和工具入口，并运行 `git diff --check`。首次添加尚未暂存的文件时，Git diff 不包含这些文件，需要额外检查新文件格式。
