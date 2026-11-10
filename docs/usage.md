@@ -10,6 +10,7 @@ fast-code-skills/
 │   ├── fast-review/SKILL.md
 │   ├── fast-fix/SKILL.md
 │   ├── fast-commit/SKILL.md
+│   ├── fast-l3-ai-native/SKILL.md
 │   └── upgrade-deepdoc/SKILL.md
 ├── .agents/skills -> ../skills
 ├── .claude/skills -> ../skills
@@ -49,13 +50,13 @@ cp -R /path/to/fast-code-skills/skills/* "$HOME/.claude/skills/"
 
 Codex 设置了 `CODEX_HOME` 时，将全局目标改为该目录下的 `skills/`。其他工具使用自身规定的项目或全局技能目录，不应假定都读取同一目录。
 
-首次复制前确认目标没有同名技能；已经安装或自定义过时，先备份并比较，再决定更新。Windows 可以通过文件管理器或 PowerShell 将这六个目录复制到目标技能目录；不需要保留符号链接。
+首次复制前确认目标没有同名技能；已经安装或自定义过时，先备份并比较，再决定更新。Windows 可以通过文件管理器或 PowerShell 将这七个目录复制到目标技能目录；不需要保留符号链接。
 
-安装后重新打开会话，并检查工具的技能列表是否出现六个名称。出现同名项目和全局技能时，核对工具实际加载的路径，避免误用旧版本。
+安装后重新打开会话，并检查工具的技能列表是否出现七个名称。出现同名项目和全局技能时，核对工具实际加载的路径，避免误用旧版本。
 
 ## 在此仓库启用原生技能入口
 
-本仓库已配置 `.agents/skills -> ../skills`，当前 Codex 会话可发现六个仓库技能。Codex 也可通过 `AGENTS.md` 读取 `skills/`。以下命令仅供入口缺失时在仓库根目录恢复使用：
+本仓库已配置 `.agents/skills -> ../skills`，当前 Codex 会话可发现七个仓库技能。Codex 也可通过 `AGENTS.md` 读取 `skills/`。以下命令仅供入口缺失时在仓库根目录恢复使用：
 
 ```bash
 mkdir -p .agents
@@ -78,6 +79,7 @@ Claude Code 已有 `.claude/skills -> ../skills`，并通过 `CLAUDE.md` 读取�
 使用 fast-review，检查刚才的改动，只报告有证据的问题。
 使用 fast-fix，逐条核实并修复上述 findings，或处理已定位的日常问题。
 使用 fast-commit，只提交本次任务相关的文件。
+使用 fast-l3-ai-native，按 L3 方法把这个需求从探索推进到上线。
 使用 upgrade-deepdoc，按指定版本升级 DeepDoc SDK 和引擎。
 ```
 
@@ -109,9 +111,9 @@ npx skills update
 
 `update` 可能更新安装器管理的其他技能，执行前查看其提示并保存本地定制。CLI 的网络操作尚未实测。
 
-手动安装时，先更新克隆仓库，再比较并重新复制六个技能目录。链接到本仓库源文件的入口随源文件更新，不需要复制。
+手动安装时，先更新克隆仓库，再比较并重新复制七个技能目录。链接到本仓库源文件的入口随源文件更新，不需要复制。
 
-卸载时只移除安装到目标位置的六个本仓库技能目录；不要删除整个技能目录，也不要删除其他技能。使用链接入口时，只移除相应入口链接即可。
+卸载时只移除安装到目标位置的七个本仓库技能目录；不要删除整个技能目录，也不要删除其他技能。使用链接入口时，只移除相应入口链接即可。
 
 ## 本地验证
 
@@ -123,6 +125,7 @@ python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-feature-rep
 python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-review
 python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-fix
 python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-commit
+python3 /path/to/skill-creator/scripts/quick_validate.py skills/fast-l3-ai-native
 python3 /path/to/skill-creator/scripts/quick_validate.py skills/upgrade-deepdoc
 ```
 

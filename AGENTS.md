@@ -1,6 +1,6 @@
 # 仓库维护约定
 
-本仓库分发六个技能，正式源文件位于 `skills/<name>/SKILL.md`。修改源文件，工具入口链接复用源文件；不直接修改个人安装目录或复制出的安装结果。
+本仓库分发七个技能，正式源文件位于 `skills/<name>/SKILL.md`。修改源文件，工具入口链接复用源文件；不直接修改个人安装目录或复制出的安装结果。
 
 用户点名 fast 技能，或任务符合其适用范围时，先读取对应文件再按其流程执行：
 
@@ -11,6 +11,7 @@
 | fast-review | `skills/fast-review/SKILL.md` | 小改动审查，只报告问题 |
 | fast-fix | `skills/fast-fix/SKILL.md` | 处理日常问题和 review findings |
 | fast-commit | `skills/fast-commit/SKILL.md` | 用户要求提交当前任务 |
+| fast-l3-ai-native | `skills/fast-l3-ai-native/SKILL.md` | 按 AI Native L3 方法推进需求到上线 |
 | upgrade-deepdoc | `skills/upgrade-deepdoc/SKILL.md` | 按指定版本升级 DeepDoc SDK 和引擎 |
 
 保持标准 `SKILL.md` frontmatter 和目录名一致。公共技能遵循使用者及目标项目的语言和提交规范；宿主专用工具必须有等价工具或文本回退。不要引入未随仓库分发的必需技能依赖。
